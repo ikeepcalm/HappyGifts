@@ -1,0 +1,41 @@
+# Plugin Configuration
+
+# Language settings
+language:
+  # Available languages: en, uk
+  # Put language files in the plugin's lang folder
+  default: "en"
+
+# Gift settings
+gifts:
+  # Maximum number of items allowed in a gift
+  max-items: 7
+
+  # Whether to announce gifts publicly when sent
+  public-announcements: true
+
+  # How long to keep completed gifts in storage (in days)
+  # Set to -1 to keep forever
+  storage-time: 30
+
+  # Delivery animation settings
+  delivery:
+    # Whether to use bee delivery animation
+    use-bees: true
+
+    # Number of seconds before gift is delivered
+    delay: 10
+
+    # Maximum number of bees to spawn for multiple gifts
+    max-bees: 5
+
+    # Particle effects when gift is opened
+    particles: true
+
+# GUI settings
+gui:
+  # Sound when opening gift-related GUIs
+  open-sound: true
+
+  # Whether to show item tooltips in gift creation
+  show-tooltips: true

@@ -1,0 +1,97 @@
+# GUI Titles
+gui.main.title: "<light_purple>✿ Жіночий День ✿"
+gui.create.title: "<gold>Створити подарунок"
+gui.recipient.title: "<gold>Вибрати отримувача"
+gui.mygifts.title: "<aqua>Мої подарунки"
+
+# Border Items
+gui.border.name: "<light_purple>✿ Жіночий День ✿"
+gui.create_border.name: "<light_purple>✿ Створення Подарунка ✿"
+
+# Main Menu Items
+gui.main.create_gift.name: "<gold>Створити Подарунок"
+gui.main.create_gift.lore: "<yellow>Створіть особливий подарунок\n<yellow>до Жіночого Дня!\n\n<white>Натисніть, щоб почати"
+gui.main.info.name: "<light_purple>Інформація про Жіночий День"
+gui.main.info.lore: "<yellow>Міжнародний жіночий день\n<yellow>відзначається щорічно 8 березня\n<yellow>на честь досягнень жінок та\n<yellow>підвищення обізнаності про\n<yellow>рівність.\n\n<white>Відсвяткуйте, надіславши подарунки!"
+gui.main.my_gifts.name: "<aqua>Мої Подарунки"
+gui.main.my_gifts.lore: "<yellow>Перегляд надісланих\n<yellow>та отриманих подарунків\n\n<white>Натисніть для перегляду"
+
+# Creation Menu Items
+gui.create.slot.name: "<yellow>Розмістіть Предмет Тут"
+gui.create.slot.lore: "<gray>Перетягніть предмети з\n<gray>вашого інвентарю"
+gui.create.name.name: "<gold>Задати Назву Подарунка"
+gui.create.name.lore: "<yellow>Поточна: {0}\n\n<white>Натисніть, щоб змінити"
+gui.create.name.not_set: "Не задано"
+gui.create.recipient.name: "<gold>Вибрати Отримувача"
+gui.create.recipient.lore: "<yellow>Поточний: {0}\n\n<white>Натисніть, щоб вибрати отримувача"
+gui.create.recipient.not_selected: "Не вибрано"
+gui.create.description.name: "<gold>Задати Опис"
+gui.create.description.lore: "<yellow>Поточний: {0}\n\n<white>Натисніть, щоб змінити"
+gui.create.description.not_set: "Не задано"
+gui.create.finalize.name: "<green>Завершити Подарунок"
+gui.create.finalize.lore: "<yellow>Завершіть свій подарунок та\n<yellow>надішліть його отримувачу\n\n<white>Натисніть, щоб надіслати"
+
+# Recipient Selection Items
+gui.recipient.player.name: "<green>{0}"
+gui.recipient.player.lore: "<yellow>Натисніть, щоб вибрати як отримувача"
+gui.recipient.back.name: "<red>Назад"
+gui.recipient.back.lore: "<yellow>Повернутися до створення подарунка"
+gui.recipient.prev.name: "<yellow>Попередня Сторінка"
+gui.recipient.next.name: "<yellow>Наступна Сторінка"
+
+# My Gifts Menu Items
+gui.mygifts.info.name: "<gold>Мої Подарунки"
+gui.mygifts.info.lore: "<yellow>Ця функція буде доступна незабаром!\n\n<gray>Перевірте пізніше, щоб побачити\n<gray>надіслані та отримані подарунки."
+gui.mygifts.back.name: "<red>Назад"
+gui.mygifts.back.lore: "<yellow>Повернутися до головного меню"
+
+# Gift Item
+item.gift.name: "<light_purple>✿ Подарунок: {0} ✿"
+item.gift.lore.from: "<yellow>Від: <white>{0}"
+item.gift.lore.message: "<yellow>Повідомлення: <white>{0}"
+item.gift.lore.instructions: "<gray>Натисніть ПКМ, щоб відкрити"
+
+# Entities
+entity.gift_bee.name: "<light_purple>✿ Доставка подарунка від {0} ✿"
+
+# Messages
+message.create_gift_open: "<green>Відкриття меню створення подарунка..."
+message.my_gifts_open: "<green>Відкриття меню моїх подарунків..."
+message.recipient_open: "<green>Відкриття меню вибору отримувача..."
+message.return_to_create: "<green>Повернення до створення подарунка..."
+message.return_to_main: "<green>Повернення до головного меню..."
+message.item_added: "<green>Предмет додано до подарунка!"
+message.item_removed: "<yellow>Предмет видалено з подарунка."
+message.set_name: "<light_purple>Будь ласка, введіть назву подарунка в чат:"
+message.name_set: "<green>Назву подарунка встановлено!"
+message.set_description: "<light_purple>Будь ласка, введіть опис подарунка в чат:"
+message.description_set: "<green>Опис подарунка встановлено!"
+message.recipient_selected: "<green>Вибрано отримувача: {0}!"
+message.gift_sent: "<green>Ваш подарунок надіслано і буде доставлено бджолами!"
+message.gift_incomplete: "<red>Будь ласка, заповніть усі деталі подарунка!"
+message.gift_invalid: "<red>Подарунок некоректний. Переконайтеся, що в ньому є предмети, назва та отримувач."
+message.recipient_offline: "<red>Отримувач не в мережі. Ваш подарунок буде доставлено, коли вони увійдуть в гру."
+message.gift_will_deliver_later: "<green>Ваш подарунок буде доставлено {0}, коли вони увійдуть в гру."
+message.gift_sent_announcement: "<light_purple>✿ <green>{0} <light_purple>надіслав особливий подарунок для <green>{1}<light_purple>! ✿"
+message.gift_delivered: "<light_purple>✿ <white>Ви отримали подарунок '<green>{1}<white>' від <green>{0}<light_purple>! ✿"
+message.gift_received: "<light_purple>✿ <white>Ви отримали подарунок '<green>{1}<white>' від <green>{0}<light_purple>! ✿"
+message.gift_message: "<yellow>Повідомлення: <white>{0}"
+message.gift_opened: "<green>Ви відкрили подарунок '<gold>{0}<green>' від <gold>{1}<green>!"
+message.pending_gifts: "<light_purple>✿ <white>У вас є <green>{0} <white>подарунків, що очікують! <light_purple>✿"
+message.gift_in_progress: "<light_purple>✿ <white>У вас був незавершений подарунок! Відкриваємо меню створення... <light_purple>✿"
+
+# Command Messages
+command.gift.create: "<light_purple>✿ <green>Створення нового подарунка до Жіночого Дня! Додайте предмети, задайте назву та опис, і виберіть отримувача. <light_purple>✿"
+command.gift.send: "<light_purple>✿ <green>Створення подарунка для {0}! Додайте предмети, задайте назву та опис. <light_purple>✿"
+
+# Help Command
+command.gift.help.header: "<gold>⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆ <light_purple>Система Подарунків до Жіночого Дня <gold>⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆"
+
+command.gift.help.commands:
+  - "<yellow>/gift <white>- Відкрити головне меню подарунків"
+  - "<yellow>/gift create <white>- Створити новий подарунок"
+  - "<yellow>/gift send <player> <white>- Створити подарунок для конкретного гравця"
+  - "<yellow>/gift view <white>- Переглянути надіслані та отримані подарунки"
+  - "<yellow>/gift help <white>- Показати це повідомлення допомоги"
+
+command.gift.help.footer: "<gold>⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆"

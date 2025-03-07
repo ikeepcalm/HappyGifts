@@ -95,8 +95,15 @@ Language files are stored in the `plugins/HappyGifts/lang/` folder. The plugin c
 
 ## Known Issues
 
-- GUI titles still use legacy formatting (limitation of Inventory Framework)
-- Gifts are currently not persistent between server restarts
+- Gifts history is not yet implemented
+- Recipient selection does not yet support offline players
+- GUI titles still use legacy formatting (§)
+- More than 7 items added to the gift will cause the GUI to break
+- ~~Gifts are currently not persistent between server restarts~~
+- ~~Gifts are not yet delivered to recipients~~
+- ~~Gifts are not yet announced publicly~~
+- ~~Gifts are not yet opened with particle effects~~
+- ~~Gifts are not yet delivered by bees~~
 
 ## License
 

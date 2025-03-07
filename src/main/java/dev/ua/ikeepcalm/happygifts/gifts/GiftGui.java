@@ -10,6 +10,7 @@ import dev.ua.ikeepcalm.happygifts.HappyGifts;
 import dev.ua.ikeepcalm.happygifts.utils.AdventureAdapter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -100,7 +101,7 @@ public class GiftGui {
 
         // My Gifts button
         ItemStack myGiftsItem = new ItemStack(Material.WRITABLE_BOOK);
-        Component myGiftsName = plugin.getLanguageManager().getText("COMING SOON...").color(NamedTextColor.RED); // gui.main.my_gifts.name
+        Component myGiftsName = Component.text("COMING SOON...").color(NamedTextColor.RED); // gui.main.my_gifts.name
         Component myGiftsLore = plugin.getLanguageManager().getText("gui.main.my_gifts.lore");
 
         GuiItem myGiftsGuiItem = AdventureAdapter.createGuiItem(
@@ -109,8 +110,8 @@ public class GiftGui {
                 myGiftsLore,
                 event -> {
                     event.setCancelled(true);
-                    player.sendMessage(plugin.getLanguageManager().getText("message.my_gifts_open"));
-                    openMyGiftsMenu(player);
+//                    player.sendMessage(plugin.getLanguageManager().getText("message.my_gifts_open"));
+//                    openMyGiftsMenu(player);
                 }
         );
 
@@ -355,14 +356,13 @@ public class GiftGui {
                 meta.setPlayerProfile(player.getPlayerProfile());
 
                 Component playerNameText = plugin.getLanguageManager()
-                        .getTextWithPlaceholders("gui.recipient.player.name", online.getName());
-                Component playerLore = plugin.getLanguageManager().getText("gui.recipient.player.lore");
+                        .getTextWithPlaceholders("gui.recipient.player.name", online.getName()).decoration(TextDecoration.ITALIC, false);
+                Component playerLore = plugin.getLanguageManager().getText("gui.recipient.player.lore").decoration(TextDecoration.ITALIC, false);
 
                 meta.displayName(playerNameText);
                 List<Component> loreComponents = new ArrayList<>();
                 loreComponents.add(playerLore);
                 meta.lore(loreComponents);
-
                 head.setItemMeta(meta);
             }
 
@@ -372,7 +372,6 @@ public class GiftGui {
                 Gift gift = plugin.getGiftManager().getActiveGift(player.getUniqueId());
                 if (gift != null) {
                     gift.setRecipient(targetUuid);
-                    // Use Adventure API directly for message
                     player.sendMessage(plugin.getLanguageManager()
                             .getTextWithPlaceholders("message.recipient_selected", online.getName()));
                 }

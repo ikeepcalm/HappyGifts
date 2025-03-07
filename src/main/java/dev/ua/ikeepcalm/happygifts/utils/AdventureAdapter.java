@@ -2,6 +2,7 @@ package dev.ua.ikeepcalm.happygifts.utils;
 
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -64,9 +65,19 @@ public class AdventureAdapter {
 
             String[] lines = miniMessageString.split("\n");
             List<Component> loreComponents = new ArrayList<>();
+            TextColor lastColor = null;
+
             for (String line : lines) {
                 Component lineComponent = MiniMessage.miniMessage().deserialize(line);
                 lineComponent = lineComponent.decoration(TextDecoration.ITALIC, false);
+
+                TextColor currentColor = lineComponent.color();
+                if (currentColor != null) {
+                    lastColor = currentColor;
+                } else if (lastColor != null) {
+                    lineComponent = lineComponent.color(lastColor);
+                }
+
                 loreComponents.add(lineComponent);
             }
 
@@ -75,6 +86,7 @@ public class AdventureAdapter {
             item.setItemMeta(meta);
         }
     }
+
 
     /**
      * Create a GuiItem with Adventure Component display name and lore

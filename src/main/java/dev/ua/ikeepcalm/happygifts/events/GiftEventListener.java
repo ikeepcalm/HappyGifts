@@ -2,7 +2,7 @@ package dev.ua.ikeepcalm.happygifts.events;
 
 import dev.ua.ikeepcalm.happygifts.HappyGifts;
 import dev.ua.ikeepcalm.happygifts.gifts.Gift;
-import dev.ua.ikeepcalm.happygifts.gifts.GiftGui;
+import dev.ua.ikeepcalm.happygifts.gifts.guis.GiftGui;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;

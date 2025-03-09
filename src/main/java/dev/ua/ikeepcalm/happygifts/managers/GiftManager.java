@@ -14,20 +14,24 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Manages all gift-related operations
- * Includes persistence for active gifts
+ * Includes persistence for active gifts and gift history
  */
 public class GiftManager implements Listener {
     private final HappyGifts plugin;
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     // Active gifts being created
     @Getter
     private final Map<UUID, Gift> activeGifts = new HashMap<>();
 
-    // Stored gifts waiting for delivery
+    // Stored gifts waiting for delivery and history
     @Getter
     private final Map<UUID, Gift> storedGifts = new HashMap<>();
 
@@ -38,9 +42,11 @@ public class GiftManager implements Listener {
     // Config file for gifts
     private File giftsFile;
     private FileConfiguration giftsConfig;
+    private final int storageTime;
 
     public GiftManager(HappyGifts plugin) {
         this.plugin = plugin;
+        this.storageTime = plugin.getConfig().getInt("gifts.storage-time", 30);
 
         // Setup gifts file
         setupGiftsFile();
@@ -60,8 +66,28 @@ public class GiftManager implements Listener {
             public void run() {
                 saveAllGifts();
                 saveActiveGifts();
+                if (storageTime > 0) {
+                    cleanupOldGifts();
+                }
             }
         }.runTaskTimer(plugin, 6000L, 6000L); // Save every 5 minutes
+    }
+
+    /**
+     * Clean up old gifts that are beyond the storage time
+     */
+    private void cleanupOldGifts() {
+        if (storageTime <= 0) return; // Keep forever if set to -1
+
+        LocalDateTime cutoffDate = LocalDateTime.now().minusDays(storageTime);
+        Iterator<Map.Entry<UUID, Gift>> iterator = storedGifts.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            Gift gift = iterator.next().getValue();
+            if (gift.isOpened() && gift.getOpenedDate() != null && gift.getOpenedDate().isBefore(cutoffDate)) {
+                iterator.remove();
+            }
+        }
     }
 
     /**
@@ -88,7 +114,7 @@ public class GiftManager implements Listener {
     }
 
     /**
-     * Load stored gifts from file
+     * Load stored gifts from file with enhanced history data
      */
     @SuppressWarnings("unchecked")
     private void loadStoredGifts() {
@@ -108,9 +134,28 @@ public class GiftManager implements Listener {
                         String name = giftSection.getString("name");
                         String description = giftSection.getString("description");
                         boolean delivered = giftSection.getBoolean("delivered", false);
+                        boolean opened = giftSection.getBoolean("opened", false);
                         List<ItemStack> items = (List<ItemStack>) giftSection.getList("items", new ArrayList<>());
 
-                        Gift gift = new Gift(giftId, sender, recipient, name, description, items, delivered);
+                        // Parse dates
+                        LocalDateTime creationDate = null;
+                        LocalDateTime deliveryDate = null;
+                        LocalDateTime openedDate = null;
+
+                        if (giftSection.contains("creationDate")) {
+                            creationDate = LocalDateTime.parse(giftSection.getString("creationDate"), DATE_FORMAT);
+                        }
+
+                        if (giftSection.contains("deliveryDate")) {
+                            deliveryDate = LocalDateTime.parse(giftSection.getString("deliveryDate"), DATE_FORMAT);
+                        }
+
+                        if (giftSection.contains("openedDate")) {
+                            openedDate = LocalDateTime.parse(giftSection.getString("openedDate"), DATE_FORMAT);
+                        }
+
+                        Gift gift = new Gift(giftId, sender, recipient, name, description, items,
+                                delivered, creationDate, deliveryDate, openedDate, opened);
                         storedGifts.put(giftId, gift);
                     }
                 } catch (Exception e) {
@@ -151,20 +196,17 @@ public class GiftManager implements Listener {
 
                         List<ItemStack> items = (List<ItemStack>) giftSection.getList("items", new ArrayList<>());
 
-                        // Create the gift
-                        Gift gift;
-                        if (recipient != null) {
-                            gift = new Gift(giftId, sender, recipient, name, description, items, false);
+                        // Parse creation date
+                        LocalDateTime creationDate = null;
+                        if (giftSection.contains("creationDate")) {
+                            creationDate = LocalDateTime.parse(giftSection.getString("creationDate"), DATE_FORMAT);
                         } else {
-                            gift = new Gift(giftId, sender, null, null, null, new ArrayList<>(), false);
-                            if (name != null) gift.setName(name);
-                            if (description != null) gift.setDescription(description);
-                            for (ItemStack item : items) {
-                                if (item != null) {
-                                    gift.addItem(item);
-                                }
-                            }
+                            creationDate = LocalDateTime.now();
                         }
+
+                        // Create the gift
+                        Gift gift = new Gift(giftId, sender, recipient, name, description, items,
+                                false, creationDate, null, null, false);
 
                         activeGifts.put(playerId, gift);
                     }
@@ -179,7 +221,7 @@ public class GiftManager implements Listener {
     }
 
     /**
-     * Save all gifts to file
+     * Save all gifts to file with enhanced history data
      */
     public void saveAllGifts() {
         // Clear existing gifts section
@@ -199,7 +241,21 @@ public class GiftManager implements Listener {
             giftSection.set("name", gift.getName());
             giftSection.set("description", gift.getDescription());
             giftSection.set("delivered", gift.isDelivered());
+            giftSection.set("opened", gift.isOpened());
             giftSection.set("items", gift.getItems());
+
+            // Save dates
+            if (gift.getCreationDate() != null) {
+                giftSection.set("creationDate", gift.getCreationDate().format(DATE_FORMAT));
+            }
+
+            if (gift.getDeliveryDate() != null) {
+                giftSection.set("deliveryDate", gift.getDeliveryDate().format(DATE_FORMAT));
+            }
+
+            if (gift.getOpenedDate() != null) {
+                giftSection.set("openedDate", gift.getOpenedDate().format(DATE_FORMAT));
+            }
         }
 
         // Save to file
@@ -212,7 +268,7 @@ public class GiftManager implements Listener {
     }
 
     /**
-     * Save active gifts to file
+     * Save active gifts to file with creation date
      */
     public void saveActiveGifts() {
         // Clear existing active gifts section
@@ -235,6 +291,11 @@ public class GiftManager implements Listener {
             giftSection.set("name", gift.getName());
             giftSection.set("description", gift.getDescription());
             giftSection.set("items", gift.getItems());
+
+            // Save creation date
+            if (gift.getCreationDate() != null) {
+                giftSection.set("creationDate", gift.getCreationDate().format(DATE_FORMAT));
+            }
         }
 
         // Save to file
@@ -304,6 +365,40 @@ public class GiftManager implements Listener {
     }
 
     /**
+     * Get all gifts sent by a player
+     */
+    public List<Gift> getSentGifts(UUID playerUuid) {
+        return storedGifts.values().stream()
+                .filter(gift -> gift.getSender().equals(playerUuid))
+                .sorted(Comparator.comparing(Gift::getCreationDate).reversed())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get all gifts received by a player
+     */
+    public List<Gift> getReceivedGifts(UUID playerUuid) {
+        return storedGifts.values().stream()
+                .filter(gift -> gift.getRecipient().equals(playerUuid))
+                .sorted(Comparator.comparing(Gift::getCreationDate).reversed())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get a page of gifts (for pagination)
+     */
+    public List<Gift> getGiftsPage(List<Gift> gifts, int page, int itemsPerPage) {
+        int start = page * itemsPerPage;
+        int end = Math.min(start + itemsPerPage, gifts.size());
+
+        if (start >= gifts.size()) {
+            return new ArrayList<>();
+        }
+
+        return gifts.subList(start, end);
+    }
+
+    /**
      * Set whether a player is in name input mode
      */
     public void setPlayerInNameInput(UUID playerUuid, boolean inNameInput) {
@@ -360,5 +455,4 @@ public class GiftManager implements Listener {
             player.sendMessage(plugin.getLanguageManager().getText("message.gift_incomplete"));
         }
     }
-
 }

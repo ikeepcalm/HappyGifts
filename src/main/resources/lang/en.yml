@@ -88,6 +88,52 @@ gui:
     name: <light_purple>✿ Women's Day ✿
   create_border:
     name: <light_purple>✿ Gift Creation ✿
+  status:
+    pending:
+      <yellow>Status: <white>Pending Delivery
+    delivered:
+      <green>Status: <white>Delivered
+    opened:
+      <light_purple>Status: <white>Opened
+  history:
+    title: "<gold>Gift History"
+    tab:
+      received:
+        active: <light_purple>Received Gifts <gray>(active)
+        inactive: <gray>Received Gifts
+      sent:
+        active: <light_purple>Sent Gifts <gray>(active)
+        inactive: <gray>Sent Gifts
+    gift:
+      name: <gold>{0}
+      from: "<yellow>From: <white>{0}"
+      to: "<yellow>To: <white>{0}"
+      created: "<yellow>Created: <white>{0}"
+      delivered: "<yellow>Delivered: <white>{0}"
+      opened: "<yellow>Opened: <white>{0}"
+      message: "<yellow>Message: <white>{0}"
+      view_details: <gray>Click to view details
+    empty:
+      sent: <red>You haven't sent any gifts yet!
+      received: <red>You haven't received any gifts yet!
+    back: <red>Back to Main Menu
+    prev_page: <yellow>Previous Page
+    next_page: <yellow>Next Page
+    page_indicator: <gold>Page {0} of {1}
+    details:
+      title: "<gold>Gift Details: {0}"
+      info:
+        name: <gold>{0}
+        sender: "<yellow>From: <white>{0}"
+        recipient: "<yellow>To: <white>{0}"
+        created: "<yellow>Created: <white>{0}"
+        delivered: "<yellow>Delivered: <white>{0}"
+        opened: "<yellow>Opened: <white>{0}"
+        message_header: "<yellow>Message:"
+      sender: "<yellow>Sender: <white>{0}"
+      recipient: "<yellow>Recipient: <white>{0}"
+      items: <yellow>Gift Contents
+      back: <red>Back to Gift History
 item:
   gift:
     name: '<light_purple>✿ Gift: {0} ✿'
@@ -146,3 +192,8 @@ command:
         - <yellow>/gift view <white>- View your sent and received gifts
         - <yellow>/gift help <white>- Show this help message
       footer: <gold>⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆
+gift:
+  status:
+    pending: "<yellow>Status: <white>Pending Delivery"
+    delivered: "<green>Status: <white>Delivered"
+    opened: "<light_purple>Status: <white>Opened"

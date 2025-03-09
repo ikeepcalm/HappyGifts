@@ -98,6 +98,10 @@ public class DeliverySystem {
                     recipient.sendMessage(plugin.getLanguageManager().getTextWithPlaceholders(
                             "message.gift_delivered", senderName, gift.getName()));
 
+                    // Mark as delivered
+                    gift.markDelivered();
+                    plugin.getGiftManager().updateStoredGift(gift);
+
                     ItemStack giftItem = createGiftItem(gift);
 
                     if (recipient.getInventory().firstEmpty() != -1) {
@@ -107,6 +111,12 @@ public class DeliverySystem {
                     }
 
                     bee.remove();
+
+                    // Announce if enabled
+                    if (plugin.getConfig().getBoolean("gifts.public-announcements", true)) {
+                        Bukkit.getServer().sendMessage(plugin.getLanguageManager().getTextWithPlaceholders(
+                                "message.gift_sent_announcement", senderName, recipient.getName()));
+                    }
 
                     cancel();
                 }
@@ -130,6 +140,16 @@ public class DeliverySystem {
                 "message.gift_delivered", senderName, gift.getName()));
 
         recipient.playSound(recipient.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
+
+        // Mark as delivered
+        gift.markDelivered();
+        plugin.getGiftManager().updateStoredGift(gift);
+
+        // Announce if enabled
+        if (plugin.getConfig().getBoolean("gifts.public-announcements", true)) {
+            Bukkit.getServer().sendMessage(plugin.getLanguageManager().getTextWithPlaceholders(
+                    "message.gift_sent_announcement", senderName, recipient.getName()));
+        }
     }
 
     /**
@@ -213,6 +233,7 @@ public class DeliverySystem {
                         "message.gift_message", gift.getDescription()));
             }
 
+            // Add gift items to inventory
             for (ItemStack item : gift.getItems()) {
                 if (item != null) {
                     if (player.getInventory().firstEmpty() != -1) {
@@ -223,9 +244,35 @@ public class DeliverySystem {
                 }
             }
 
-            gift.setDelivered(true);
+            // Play particles if enabled
+            if (plugin.getConfig().getBoolean("gifts.delivery.particles", true)) {
+                playGiftOpenParticles(player.getLocation());
+            }
 
+            // Mark as opened and update
+            gift.markOpened();
             plugin.getGiftManager().updateStoredGift(gift);
         }
+    }
+
+    /**
+     * Play particles when a gift is opened
+     */
+    private void playGiftOpenParticles(Location location) {
+        location.getWorld().spawnParticle(Particle.HEART, location, 15, 0.5, 0.5, 0.5, 0.1);
+        location.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, location, 20, 0.5, 0.5, 0.5, 0.1);
+
+        // Play particles over 2 seconds
+        new BukkitRunnable() {
+            private int count = 0;
+            @Override
+            public void run() {
+                if (count++ >= 4) {
+                    cancel();
+                    return;
+                }
+                location.getWorld().spawnParticle(Particle.HEART, location, 5, 0.5, 0.5, 0.5, 0.1);
+            }
+        }.runTaskTimer(plugin, 10L, 10L);
     }
 }

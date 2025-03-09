@@ -1,4 +1,4 @@
-package dev.ua.ikeepcalm.happygifts.gifts;
+package dev.ua.ikeepcalm.happygifts.gifts.guis;
 
 import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
@@ -7,6 +7,7 @@ import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
 import com.github.stefvanschie.inventoryframework.pane.Pane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import dev.ua.ikeepcalm.happygifts.HappyGifts;
+import dev.ua.ikeepcalm.happygifts.gifts.Gift;
 import dev.ua.ikeepcalm.happygifts.utils.AdventureAdapter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -16,7 +17,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -110,6 +110,7 @@ public class GiftGui {
                 myGiftsLore,
                 event -> {
                     event.setCancelled(true);
+                    new GiftHistoryGui(plugin).openHistoryMenu(player);
 //                    player.sendMessage(plugin.getLanguageManager().getText("message.my_gifts_open"));
 //                    openMyGiftsMenu(player);
                 }
@@ -429,56 +430,4 @@ public class GiftGui {
         gui.show(player);
     }
 
-    /**
-     * Opens the my gifts menu
-     */
-    public void openMyGiftsMenu(Player player) {
-        String title = AdventureAdapter.componentToLegacy(plugin.getLanguageManager().getText("gui.mygifts.title"));
-        ChestGui gui = new ChestGui(5, title);
-
-        // Create border pane (MUST BE ADDED FIRST)
-        OutlinePane borderPane = new OutlinePane(0, 0, 9, 5);
-        borderPane.setRepeat(true);
-        borderPane.setPriority(Pane.Priority.LOWEST);
-
-        ItemStack borderItem = new ItemStack(Material.PINK_STAINED_GLASS_PANE);
-        ItemMeta borderMeta = borderItem.getItemMeta();
-        if (borderMeta != null) {
-            borderMeta.displayName(Component.text(" "));
-            borderItem.setItemMeta(borderMeta);
-        }
-
-        borderPane.addItem(new GuiItem(borderItem, e -> e.setCancelled(true)));
-        gui.addPane(borderPane);
-
-        StaticPane contentPane = new StaticPane(0, 0, 9, 5);
-        contentPane.setPriority(Pane.Priority.HIGH);
-
-        ItemStack infoItem = new ItemStack(Material.PAPER);
-        ItemMeta infoMeta = infoItem.getItemMeta();
-        if (infoMeta != null) {
-            infoMeta.displayName(plugin.getLanguageManager().getText("gui.mygifts.info.name"));
-            infoMeta.lore(plugin.getLanguageManager().getTextList("gui.mygifts.info.lore"));
-            infoItem.setItemMeta(infoMeta);
-        }
-
-        contentPane.addItem(new GuiItem(infoItem, event -> event.setCancelled(true)), 4, 2);
-
-        ItemStack backItem = new ItemStack(Material.BARRIER);
-        ItemMeta backMeta = backItem.getItemMeta();
-        if (backMeta != null) {
-            backMeta.displayName(plugin.getLanguageManager().getText("gui.mygifts.back.name"));
-            backMeta.lore(plugin.getLanguageManager().getTextList("gui.mygifts.back.lore"));
-            backItem.setItemMeta(backMeta);
-        }
-
-        contentPane.addItem(new GuiItem(backItem, event -> {
-            event.setCancelled(true);
-            player.sendMessage(plugin.getLanguageManager().getText("message.return_to_main"));
-            openMainMenu(player);
-        }), 4, 3);
-
-        gui.addPane(contentPane);
-        gui.show(player);
-    }
 }

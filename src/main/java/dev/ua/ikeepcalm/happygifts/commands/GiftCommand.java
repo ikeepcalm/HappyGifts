@@ -4,7 +4,8 @@ import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import dev.ua.ikeepcalm.happygifts.HappyGifts;
 import dev.ua.ikeepcalm.happygifts.gifts.Gift;
-import dev.ua.ikeepcalm.happygifts.gifts.GiftGui;
+import dev.ua.ikeepcalm.happygifts.gifts.guis.GiftGui;
+import dev.ua.ikeepcalm.happygifts.gifts.guis.GiftHistoryGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
@@ -104,7 +105,7 @@ public class GiftCommand {
         return new CommandAPICommand("view")
                 .withPermission("happygifts.gift.view")
                 .executesPlayer((player, args) -> {
-                    new GiftGui(plugin).openMyGiftsMenu(player);
+                    new GiftHistoryGui(plugin).openHistoryMenu(player);
                 });
     }
 

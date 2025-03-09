@@ -87,6 +87,7 @@ public class LanguageManager {
         config.set("gui.create.title", "<gold>Create Women's Day Gift");
         config.set("gui.recipient.title", "<gold>Select Gift Recipient");
         config.set("gui.mygifts.title", "<aqua>My Gifts");
+        config.set("gui.history.title", "<gold>Gift History");
 
         // Border Items
         config.set("gui.border.name", "<light_purple>✿ Women's Day ✿");
@@ -129,11 +130,56 @@ public class LanguageManager {
         config.set("gui.mygifts.back.name", "<red>Back");
         config.set("gui.mygifts.back.lore", "<yellow>Return to main menu");
 
+        // Gift History Tab Items
+        config.set("gui.history.tab.received.active", "<light_purple>Received Gifts <gray>(active)");
+        config.set("gui.history.tab.received.inactive", "<gray>Received Gifts");
+        config.set("gui.history.tab.sent.active", "<light_purple>Sent Gifts <gray>(active)");
+        config.set("gui.history.tab.sent.inactive", "<gray>Sent Gifts");
+
+        // Gift History Gift Items
+        config.set("gui.history.gift.name", "<gold>{0}");
+        config.set("gui.history.gift.from", "<yellow>From: <white>{0}");
+        config.set("gui.history.gift.to", "<yellow>To: <white>{0}");
+        config.set("gui.history.gift.created", "<yellow>Created: <white>{0}");
+        config.set("gui.history.gift.delivered", "<yellow>Delivered: <white>{0}");
+        config.set("gui.history.gift.opened", "<yellow>Opened: <white>{0}");
+        config.set("gui.history.gift.message", "<yellow>Message: <white>{0}");
+        config.set("gui.history.gift.view_details", "<gray>Click to view details");
+
+        // Gift History Empty States
+        config.set("gui.history.empty.sent", "<red>You haven't sent any gifts yet!");
+        config.set("gui.history.empty.received", "<red>You haven't received any gifts yet!");
+
+        // Gift History Navigation
+        config.set("gui.history.back", "<red>Back to Main Menu");
+        config.set("gui.history.prev_page", "<yellow>Previous Page");
+        config.set("gui.history.next_page", "<yellow>Next Page");
+        config.set("gui.history.page_indicator", "<gold>Page {0} of {1}");
+
+        // Gift History Details
+        config.set("gui.history.details.title", "<gold>Gift Details: {0}");
+        config.set("gui.history.details.info.name", "<gold>{0}");
+        config.set("gui.history.details.info.sender", "<yellow>From: <white>{0}");
+        config.set("gui.history.details.info.recipient", "<yellow>To: <white>{0}");
+        config.set("gui.history.details.info.created", "<yellow>Created: <white>{0}");
+        config.set("gui.history.details.info.delivered", "<yellow>Delivered: <white>{0}");
+        config.set("gui.history.details.info.opened", "<yellow>Opened: <white>{0}");
+        config.set("gui.history.details.info.message_header", "<yellow>Message:");
+        config.set("gui.history.details.sender", "<yellow>Sender: <white>{0}");
+        config.set("gui.history.details.recipient", "<yellow>Recipient: <white>{0}");
+        config.set("gui.history.details.items", "<yellow>Gift Contents");
+        config.set("gui.history.details.back", "<red>Back to Gift History");
+
         // Gift Item
         config.set("item.gift.name", "<light_purple>✿ Gift: {0} ✿");
         config.set("item.gift.lore.from", "<yellow>From: <white>{0}");
         config.set("item.gift.lore.message", "<yellow>Message: <white>{0}");
         config.set("item.gift.lore.instructions", "<gray>Right-click to open");
+
+        // Gift Status
+        config.set("gift.status.pending", "<yellow>Status: <white>Pending Delivery");
+        config.set("gift.status.delivered", "<green>Status: <white>Delivered");
+        config.set("gift.status.opened", "<light_purple>Status: <white>Opened");
 
         // Entities
         config.set("entity.gift_bee.name", "<light_purple>✿ Gift Delivery from {0} ✿");
@@ -167,10 +213,12 @@ public class LanguageManager {
         config.set("message.gift_opened", "<green>You opened the gift '<gold>{0}<green>' from <gold>{1}<green>!");
         config.set("message.pending_gifts", "<light_purple>✿ <white>You have <green>{0} <white>pending gifts! <light_purple>✿");
         config.set("message.gift_in_progress", "<light_purple>✿ <white>You had a gift in progress! Opening the creation menu... <light_purple>✿");
+        config.set("message.gift_not_found", "<red>This gift could not be found!");
 
         // Command Messages
         config.set("command.gift.create", "<light_purple>✿ <green>Creating a new Women's Day gift! Add items, set a name and description, and choose a recipient. <light_purple>✿");
         config.set("command.gift.send", "<light_purple>✿ <green>Creating a gift for {0}! Add items, set a name and description. <light_purple>✿");
+        config.set("command.gift.reload", "<light_purple>✿ <green>Plugin configuration and languages have been reloaded! <light_purple>✿");
 
         // Help Command
         config.set("command.gift.help.header", "<gold>⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆ <light_purple>Women's Day Gift System <gold>⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆");
@@ -181,6 +229,7 @@ public class LanguageManager {
         helpCommands.add("<yellow>/gift send <player> <white>- Create a gift for a specific player");
         helpCommands.add("<yellow>/gift view <white>- View your sent and received gifts");
         helpCommands.add("<yellow>/gift help <white>- Show this help message");
+        helpCommands.add("<yellow>/happygifts reload <white>- Reload plugin configuration");
 
         config.set("command.gift.help.commands", helpCommands);
         config.set("command.gift.help.footer", "<gold>⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆");

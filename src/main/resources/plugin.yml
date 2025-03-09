@@ -1,4 +1,4 @@
 name: HappyGifts
-version: '1.0'
+version: '1.0.1'
 main: dev.ua.ikeepcalm.happygifts.HappyGifts
 api-version: '1.21'

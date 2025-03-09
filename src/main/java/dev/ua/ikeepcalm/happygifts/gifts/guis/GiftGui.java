@@ -101,7 +101,7 @@ public class GiftGui {
 
         // My Gifts button
         ItemStack myGiftsItem = new ItemStack(Material.WRITABLE_BOOK);
-        Component myGiftsName = Component.text("COMING SOON...").color(NamedTextColor.RED); // gui.main.my_gifts.name
+        Component myGiftsName = plugin.getLanguageManager().getText("gui.main.my_gifts.name");
         Component myGiftsLore = plugin.getLanguageManager().getText("gui.main.my_gifts.lore");
 
         GuiItem myGiftsGuiItem = AdventureAdapter.createGuiItem(
@@ -111,8 +111,6 @@ public class GiftGui {
                 event -> {
                     event.setCancelled(true);
                     new GiftHistoryGui(plugin).openHistoryMenu(player);
-//                    player.sendMessage(plugin.getLanguageManager().getText("message.my_gifts_open"));
-//                    openMyGiftsMenu(player);
                 }
         );
 

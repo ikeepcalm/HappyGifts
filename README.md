@@ -95,7 +95,7 @@ Language files are stored in the `plugins/HappyGifts/lang/` folder. The plugin c
 
 ## Known Issues
 
-- Gifts history is not yet implemented
+- ~~Gifts history is not yet implemented~~
 - Recipient selection does not yet support offline players
 - GUI titles still use legacy formatting (§)
 - More than 7 items added to the gift will cause the GUI to break
